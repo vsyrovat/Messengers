@@ -1,0 +1,6 @@
+PHP-to-multi-messengers application
+
+'core' is framework folder, 'messengers' is application folder
+
+To run daemon type messengers/app/daemon (linups) or messengers/app/daemon.bat (mustdie)
+To run console type messenger/app/run or messenger/app/run.bat and follow screen instructions
