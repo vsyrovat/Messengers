@@ -8,7 +8,8 @@
  
 class Z_Logger extends Z_Object implements iLogger {
 	protected
-		$logfile_handler;
+		$logfile_handler,
+		$logfile_error_handler;
 
 
 	public function afterSet(){
@@ -19,6 +20,9 @@ class Z_Logger extends Z_Object implements iLogger {
 	function __destruct(){
 		if ($this->logfile_handler){
 			fclose($this->logfile_handler);
+		}
+		if ($this->logfile_error_handler){
+			fclose($this->logfile_error_handler);
 		}
 	}
 
@@ -31,7 +35,12 @@ class Z_Logger extends Z_Object implements iLogger {
 
 
 	public function logError($message){
-		
+		if (!$this->logfile_error_handler){
+			$this->logfile_error_handler = fopen($this->config['/errorfile'], 'a');
+		}
+		$ts = date('r');
+		$logstring = "$ts: $message\r\n";
+		fwrite($this->logfile_error_handler, $logstring);
 	}
 
 

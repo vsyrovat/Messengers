@@ -250,4 +250,16 @@ class Z_Mysqli extends Z_Object implements iDatabase {
 		return $literal;
 	}
 
+
+	public function isTableExists($table_name){
+		$table_name = str_replace('#__', $this->config['prefix'], $table_name);
+		$r = $this->query("SHOW TABLES LIKE '$table_name'");
+		$num_rows = $r->num_rows();
+		$r->free();
+		if ($num_rows > 0){
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

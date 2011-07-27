@@ -14,6 +14,7 @@ class Z_Factory implements iFactory {
 		$loaded_instances = array(),
 		$loaded_controllers = array(),
 		$loaded_models = array(),
+		$loaded_migrations = array(),
 		$router;
 	
 	function __construct(iConfig $config){
@@ -177,6 +178,41 @@ class Z_Factory implements iFactory {
 			if (array_key_exists($model_class, $this->loaded_models)){
 				$instance = $this->loaded_models[$model_class];
 			}
+		}
+		return $instance;
+	}
+
+
+	public function getMigration($migration_id){
+		$migration_class = 'Migration_'.$migration_id;
+		if (!class_exists($migration_class, false) || !array_key_exists($migration_id, $this->loaded_migrations)){
+			$migration_file = APP_MIGRATIONS_PATH . $migration_id . '.php';
+			if (RUN_MODE == 'development'){
+				if (file_exists($migration_file)){
+					include_once ($migration_file);
+				} else {
+					throw new ClassNotFoundException('Not found migration file '.$migration_file);
+				}
+				if (!class_exists($migration_class, false)){
+					throw new ClassNotFoundException('Not found migration class '.$migration_class);
+				}
+				$reflection = new ReflectionClass($migration_class);
+				if (!$reflection->implementsInterface('iMigration')){
+					trigger_error("It's expected class $migration_class implements iMigration", E_USER_WARNING);
+				}
+				if (!$reflection->implementsInterface('iObject')){
+					trigger_error("It's expected class $migration_class implements iObject", E_USER_WARNING);
+				}
+			} else {
+				include_once ($migration_file);
+			}
+
+			$instance = new $migration_class;
+			$instance->setFactory($this);
+			$instance->afterSet();
+			$this->loaded_migrations[$migration_id] = $instance;
+		} else {
+			$instance = $this->loaded_migrations[$migration_id];
 		}
 		return $instance;
 	}

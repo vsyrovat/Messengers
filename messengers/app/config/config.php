@@ -19,5 +19,18 @@ return array(
 		),
 	),
 
+	'db1' => array(
+		'connection_string' => 'mysql:dbname=messengers_db;host=localhost;port=3306',
+		'driver' => 'mysql',
+		'charset' => 'utf8',
+		'collation' => 'utf8_general_ci',
+		'database' => 'messengers_db',
+		'prefix' => '',
+		'username' => 'root',
+		'password' => '',
+		'host' => 'localhost',
+		'port' => 3306,
+	),
+
 
 );

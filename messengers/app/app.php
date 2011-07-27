@@ -13,6 +13,7 @@ define ('APP_VIEWS_PATH', APP_PATH . 'views'.DS);
 define ('APP_MODEL_PATH', APP_PATH . 'models' . DS);
 define ('APP_LOG_PATH', realpath(APP_PATH . '..').DS.'logs'.DS);
 define ('APP_TMP_PATH', realpath(APP_PATH . '..').DS.'tmp'.DS);
+define ('APP_MIGRATIONS_PATH', APP_PATH.'db'.DS.'migrations'.DS);
 
 define ('RUN_MODE', include APP_CONFIG_PATH . 'run_mode.php');
 

@@ -11,6 +11,7 @@ interface iFactory {
 	function getObjectByClassName($classname);
 	function getController($controller_name);
 	function getModel($model_name);
+	function getMigration($migration_id);
 	function registerInstance($instance, $instance_name);
 	function registerRouter(iRouter $router);
 	function registerConfig(iConfig $config);
@@ -157,6 +158,7 @@ interface iDatabase {
 	function insert_id();
 	function affected_rows();
 	function escape($str);
+	function isTableExists($table_name);
 }
 
 
@@ -164,4 +166,10 @@ interface iDBModel {
 	function getEmptyItem();
 	function getItem($id, $fields = '*');
 	function getItemsList($fields = '*', $params = array(), $use_indexes = false);
+}
+
+
+interface iMigration {
+	function up();
+	function down();
 }

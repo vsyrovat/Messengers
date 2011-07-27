@@ -2,5 +2,13 @@ PHP-to-multi-messengers application
 
 'core' is framework folder, 'messengers' is application folder
 
-To run daemon type messengers/app/daemon (linups) or messengers/app/daemon.bat (mustdie)
-To run console type messenger/app/run or messenger/app/run.bat and follow screen instructions
+Installation:
+1. open messenger/config/config.php in editor and change your database settings
+2. run console commands:
+messenger/app/ztool db:init
+messenger/app/ztool db:migrate
+
+
+How to use:
+To run daemon type messengers/app/daemon
+To run console type messenger/app/run and follow on-screen instructions
